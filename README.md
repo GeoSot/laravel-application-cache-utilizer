@@ -1,8 +1,6 @@
 # Laravel app cache utilizer
-This Package allows to manage Laravel .env file values on the Fly (add, edit, delete keys), upload another .env or create backups
-<br/>
-Management can be done through the user interface, or programmatically by using the `AppCache` Facade, without breaking the files structure. 
-<br/>
+This Package imitates the default laravel app cache functionality, where demanding processes that calculate registered data (config, providers, routes),
+are cached there in order to be used in each app bootstrap, avoiding recalculation time
 
 *   [Installation](#installation)
 *   [Available Methods](#available_methods)
@@ -24,6 +22,7 @@ Management can be done through the user interface, or programmatically by using 
      Or publish specific tags
      
 ## <a name="available_methods">Available Methods:</a>
+```php
 
 * get(string $key, array $default = []): array
 * has(string $key): bool
@@ -32,4 +31,6 @@ Management can be done through the user interface, or programmatically by using 
 * forget(string $key): bool // clear the given cached file, if exists
 * clear(): bool  // clear all package's cached files
 
+
+```
  
