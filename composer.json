@@ -1,6 +1,6 @@
 {
-    "name": "geo-sot/laravel-env-editor",
-    "description": "A laravel Package that supports .Env File, editing and backup ",
+    "name": "geo-sot/laravel-app-cache-utilizer",
+    "description": "A laravel Package that Utilizes the default app cache functionality",
     "keywords": [
         "geo-sot",
         "laravel",

@@ -2,19 +2,11 @@
 
 namespace GeoSot\AppCache;
 
+use Illuminate\Config\Repository;
+use Illuminate\Filesystem\Filesystem;
+
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Properties
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Vendor name.
-     *
-     * @var string
-     */
-    protected $vendor = 'geo-sv';
-
     /**
      * Package name.
      *
@@ -33,6 +25,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $this->publishes([
                 __DIR__."/../config/{$this->package}.php" => config_path($this->package.'.php'),
             ], 'config');
+
+            $this->commands(
+                ClearCommand::class
+            );
         }
     }
 
@@ -49,13 +45,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         );
 
         $this->app->singleton(AppCache::class, function () {
-            $cacheDirectory=app()->bootstrapPath($this->package);
-            return $this->app->make(AppCache::class,[$cacheDirectory,config($this->package)]);
+            $cacheDirectory = app()->bootstrapPath($this->package);
 
-//            return new AppCache(config($this->package), $this->app->bootstrapPath());
-
+            return new AppCache(
+                $cacheDirectory,
+                new Repository(config($this->package)),
+                $this->app->make(Filesystem::class)
+            );
         });
-
     }
-
 }

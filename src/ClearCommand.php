@@ -11,18 +11,16 @@ class ClearCommand extends Command
      *
      * @var string
      */
-    protected $name = 'app-cache-utilizer:clear {--key= : delete a specific cache or all}';
+    protected $signature = 'app-cache-utilizer:clear {key? : delete a specific cache or all}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Remove the `app-cache-utilizer` cache file(s)';
-
+    protected $description = 'Remove the "app-cache-utilizer" cache file(s)';
 
     protected AppCache $appCache;
-
 
     public function __construct(AppCache $appCache)
     {
@@ -38,12 +36,14 @@ class ClearCommand extends Command
      */
     public function handle()
     {
-        $key = $this->option('key');
+        /** @var string $key */
+        $key = $this->argument('key');
 
         $result = $key ? $this->appCache->forget($key) : $this->appCache->clear();
 
         if ($result) {
-            $this->info('Configuration cache cleared!');
+            $this->info($key ? "Configuration cache key:'$key' cleared!" : 'Configuration cache cleared!');
+
             return;
         }
         $this->warn('Configuration cache NOT cleared!');
